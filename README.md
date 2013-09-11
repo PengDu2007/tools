@@ -6,7 +6,7 @@
 
     把markdown转成html格式
   
-- 安装
+- 安装以及编译
 
         go get github.com/russross/blackfriday
         go build md2html.go
