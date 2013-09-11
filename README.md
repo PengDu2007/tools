@@ -20,10 +20,10 @@
 
 - 安装
 
-因为是利用enca或者iconv来进行文件编码转换,所以需要事先安装其中一个.
-
         sudo apt-get install enca
         #sudo apt-get install iconv
+        
+因为是利用enca或者iconv来进行文件编码转换,所以需要事先安装其中一个.
 
 - 用法
 
