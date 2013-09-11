@@ -3,7 +3,7 @@
 
 ## md2html.go
 - 介绍
-    语言:go
+
     把markdown转成html格式
   
 - 安装
@@ -18,7 +18,7 @@
 
 ## iconv_charsets.sh
 - 介绍
-    语言shell
+    
     批量更改网站文件编码(gbk,gb2312=>utf-8)
 
 - 用法
