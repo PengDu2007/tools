@@ -6,7 +6,7 @@
 
 - Usage
 
-	# ./backup.sh
+		# ./backup.sh
 
 
 ## iconv_charsets.sh
@@ -20,4 +20,4 @@ In order to use this script, you should be installed **enca** or **iconv**. I re
 
 - Usage
 
-	# ./iconv_charsets.sh directory
+		# ./iconv_charsets.sh directory
