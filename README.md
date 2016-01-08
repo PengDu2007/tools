@@ -1,15 +1,23 @@
+# README
+
+## backup.sh
+
+> backup script
+
+- Usage
+
+	# ./backup.sh
+
+
 ## iconv_charsets.sh
-- 介绍
-    
-    批量更改网站文件编码(gbk,gb2312=>utf-8)
 
-- 安装
+> Batch Change document's charset(gbk,gb2312 to utf-8)
 
-        sudo apt-get install enca
-        #sudo apt-get install iconv
-        
-因为是利用enca或者iconv来进行文件编码转换,所以需要事先安装其中一个,推荐enca.
+In order to use this script, you should be installed **enca** or **iconv**. I recommended using **enca**.
 
-- 用法
+	# sudo apt-get install enca
+	# sudo apt-get install iconv
 
-        ./iconv_charsets.sh 目录名
+- Usage
+
+	# ./iconv_charsets.sh directory
