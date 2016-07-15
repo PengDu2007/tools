@@ -1,9 +1,6 @@
 #!/bin/bash
 ##################################################
 # This is a shell script for backup in Server.
-# @author ioioj5
-# @date 2016/01/09  00:42:40 
-# @version 0.1.1
 ##################################################
 # Global Variable
 BACKUP_TIME=`date +%Y%m%d_%H%M`
