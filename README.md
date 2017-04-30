@@ -15,3 +15,6 @@
 
 - lnmp.sh
 	> LNMP(Linux + Nginx + MySql + Php) 安装脚本
+
+- httpdCheck.sh
+	> 监控httpd以及TCP状态

@@ -1,5 +1,4 @@
 #!/bin/sh
-#!/bin/bash
 # 备份MySQL数据库
 # @author ioioj5
 # @version 0.1

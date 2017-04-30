@@ -1,4 +1,8 @@
-#!/bin/bash
+#!/bin/sh
+# 备份程序
+# @author ioioj5
+# @version 0.1
+# @date 2016/12/22
 BACKUPTIME=`date +%Y%m%d_%H%M`
 BACKUPDIR=/data/backup/programe
 
