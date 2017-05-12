@@ -4,8 +4,11 @@
 - bakup.sh
 	> 备份服务器数据
 
-- backup_mysql.sh
+- backupMySQL.sh
 	> 备份MySQL数据库
+	
+- backupProgram.sh
+	> 备份程序
 
 - iconv_charset.sh
 	> 转换文件编码
