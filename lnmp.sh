@@ -63,7 +63,7 @@ cp /data/tools/php-5.6.30/php.ini-development /data/server/php/etc/php.ini
 sed -i 's#; extension_dir = \"\.\/\"#extension_dir = "/data/server/php/lib/php/extensions/no-debug-non-zts-20121212/"#'  /data/server/php/etc/php.ini
 sed -i 's/post_max_size = 8M/post_max_size = 64M/g' /data/server/php/etc/php.ini
 sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 64M/g' /data/server/php/etc/php.ini
-sed -i 's/;date.timezone =/date.timezone = Asia/Shanghai/g' /data/server/php/etc/php.ini
+sed -i 's/;date.timezone =/date.timezone = Asia\/Shanghai/g' /data/server/php/etc/php.ini
 sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=1/g' /data/server/php/etc/php.ini
 sed -i 's/max_execution_time = 30/max_execution_time = 300/g' /data/server/php/etc/php.ini
 
