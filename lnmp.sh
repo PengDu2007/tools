@@ -94,7 +94,7 @@ socket          = /tmp/mysql.sock
 port            = 3306
 socket          = /tmp/mysql.sock
 skip-external-locking
-log-error=/data/log/mysql/error.log
+log-error=/data/log/mysql/mysql.log
 key_buffer_size = 16M
 max_allowed_packet = 1M
 table_open_cache = 64
@@ -130,3 +130,6 @@ max_binlog_size = 1000M
 END
 
 chmod 755 /etc/init.d/mysqld
+
+# alter user 'root'@'localhost' identified by 'youpassword';  
+# flush privileges;
