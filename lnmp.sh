@@ -28,9 +28,15 @@ wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-
 yum clean all && yum makecache && yum -y update
 
 # 安装支持库以及工具
-yum -y install wget gcc gcc-c++ gcc-g77 make libtool autoconf patch unzip automake libxml2 libxml2-devel ncurses ncurses-devel libtool-ltdl-devel libtool-ltdl libpng libpng-devel libjpeg-devel openssl openssl-devel curl curl-devel   ncurses ncurses-devel  libtool-ltdl libaio*i pcre pcre-devel tar vixie-cron zlib file  sharutils zip  bash vim cyrus-sasl-devel libmemcached libmemcached-devel libyaml libyaml-devel libvpx-devel  ImageMagick-devel gd-devel mcrypt mhash bzip2 bzip2-devel libjpeg freetype-devel bison net-tools
+yum -y install wget gcc gcc-c++ gcc-g77 make libtool autoconf patch unzip automake libxml2 libxml2-devel ncurses ncurses-devel libtool-ltdl-devel libtool-ltdl libpng libpng-devel libjpeg-devel openssl openssl-devel curl curl-devel   ncurses ncurses-devel  libtool-ltdl libaio* pcre pcre-devel tar vixie-cron zlib file  sharutils zip  bash vim cyrus-sasl-devel libmemcached libmemcached-devel libyaml libyaml-devel libvpx-devel  ImageMagick-devel gd-devel mcrypt mhash bzip2 bzip2-devel libjpeg freetype-devel bison net-tools
 
 cd $dir/tools/
+
+# 配置nginx目录
+chmod 775 $dir/server/nginx/logs
+chown -R www:www $dir/server/nginx/logs
+chmod -R 775 $dir/www
+chown -R www:www $dir/www
 
 # 安装nginx
 wget http://nginx.org/download/nginx-1.11.13.tar.gz -O nginx-1.11.13.tar.gz
@@ -38,15 +44,21 @@ wget http://nginx.org/download/nginx-1.11.13.tar.gz -O nginx-1.11.13.tar.gz
 tar -xzvf nginx-1.11.13.tar.gz
 
 cd nginx-1.11.13
-./configure --prefix=$dir/server/nginx --with-http_ssl_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_gzip_static_module --with-http_stub_status_module --with-debug
+./configure --prefix=$dir/server/nginx \
+--user=www \
+--group=www \
+--error-log-path=$dir/server/nginx/logs/error.log \
+--http-log-path=$dir/server/nginx/logs/access.log \
+--with-http_ssl_module \
+--with-http_realip_module \
+--with-http_sub_module \
+--with-http_dav_module \
+--with-http_flv_module \
+--with-http_gzip_static_module \
+--with-http_stub_status_module \
+--with-debug
 
 make && make install
-
-# 配置nginx
-chmod 775 $dir/server/nginx/logs
-chown -R www:www $dir/server/nginx/logs
-chmod -R 775 $dir/www
-chown -R www:www $dir/www
 
 # 启动nginx
 $dir/server/nginx/sbin/nginx -c $dir/server/nginx/conf/nginx.conf
@@ -72,7 +84,7 @@ make && make install
 ## 配置php
 cp $dir/tools/php-7.1.9/php.ini-development $dir/server/php/etc/php.ini
 ## php.ini
-sed -i 's#; extension_dir = \"\.\/\"#extension_dir = "$dir/server/php/lib/php/extensions/no-debug-non-zts-20121212/"#'  $dir/server/php/etc/php.ini
+sed -i 's#; extension_dir = \"\.\/\"#extension_dir = "'$dir'/server/php/lib/php/extensions/no-debug-non-zts-20121212/"#'  $dir/server/php/etc/php.ini
 sed -i 's/post_max_size = 8M/post_max_size = 64M/g' $dir/server/php/etc/php.ini
 sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 64M/g' $dir/server/php/etc/php.ini
 sed -i 's/;date.timezone =/date.timezone = Asia\/Shanghai/g' $dir/server/php/etc/php.ini
@@ -82,15 +94,15 @@ sed -i 's/max_execution_time = 30/max_execution_time = 300/g' $dir/server/php/et
 cp $dir/server/php/etc/php-fpm.conf.default $dir/server/php/etc/php-fpm.conf
 cp $dir/server/php/etc/php-fpm.d/www.conf.default $dir/server/php/etc/php-fpm.d/www.conf
 
-sed -i 's,user = nobody,user=www,g'   /data/server/php/etc/php-fpm.d/www.conf
-sed -i 's,group = nobody,group=www,g'   /data/server/php/etc/php-fpm.d/www.conf
-sed -i 's,^pm.min_spare_servers = 1,pm.min_spare_servers = 5,g'   /data/server/php/etc/php-fpm.d/www.conf
-sed -i 's,^pm.max_spare_servers = 3,pm.max_spare_servers = 35,g'   /data/server/php/etc/php-fpm.d/www.conf
-sed -i 's,^pm.max_children = 5,pm.max_children = 100,g'   /data/server/php/etc/php-fpm.d/www.conf
-sed -i 's,^pm.start_servers = 2,pm.start_servers = 20,g'   /data/server/php/etc/php-fpm.d/www.conf
-sed -i 's,;pid = run/php-fpm.pid,pid = run/php-fpm.pid,g'   /data/server/php/etc/php-fpm.d/www.conf
-sed -i 's,;error_log = log/php-fpm.log,error_log = /data/log/php/php-fpm.log,g'   /data/server/php/etc/php-fpm.d/www.conf
-sed -i 's,;slowlog = log/$pool.log.slow,slowlog = /data/log/php/\$pool.log.slow,g'   /data/server/php/etc/php-fpm.d/www.conf
+sed -i 's,user = nobody,user=www,g'   $dir/server/php/etc/php-fpm.d/www.conf
+sed -i 's,group = nobody,group=www,g'   $dir/server/php/etc/php-fpm.d/www.conf
+sed -i 's,^pm.min_spare_servers = 1,pm.min_spare_servers = 5,g'   $dir/server/php/etc/php-fpm.d/www.conf
+sed -i 's,^pm.max_spare_servers = 3,pm.max_spare_servers = 35,g'   $dir/server/php/etc/php-fpm.d/www.conf
+sed -i 's,^pm.max_children = 5,pm.max_children = 100,g'   $dir/server/php/etc/php-fpm.d/www.conf
+sed -i 's,^pm.start_servers = 2,pm.start_servers = 20,g'   $dir/server/php/etc/php-fpm.d/www.conf
+sed -i 's,;pid = run/php-fpm.pid,pid = run/php-fpm.pid,g'   $dir/server/php/etc/php-fpm.d/www.conf
+sed -i 's,;error_log = log/php-fpm.log,error_log = '$dir'/log/php/php-fpm.log,g'   $dir/server/php/etc/php-fpm.d/www.conf
+sed -i 's,;slowlog = log/$pool.log.slow,slowlog = '$dir'/log/php/\$pool.log.slow,g'   $dir/server/php/etc/php-fpm.d/www.conf
 
 install -v -m755 $dir/tools/php-7.1.9/sapi/fpm/init.d.php-fpm  /etc/init.d/php-fpm
 # 启动php-fpm
