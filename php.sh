@@ -5,7 +5,7 @@
 # @version 2017/09/26 16:35:21
 
 # 设置安装目录
-dir=/opt
+dir=/data
 
 # 创建文件夹
 mkdir -p $dir/server
