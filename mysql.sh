@@ -92,3 +92,27 @@ chmod 755 /etc/init.d/mysqld
 /etc/init.d/mysqld start
 # alter user 'root'@'localhost' identified by '123456';  
 # flush privileges;
+
+
+###############################
+# for centos7*
+###############################
+cat > /usr/lib/systemd/system/mysql.service <<EOF
+[Unit]
+Description=MySQL Server 5.7.18
+Documentation=http://dev.mysql.com/doc/refman/en/using-systemd.html
+After=network.target
+After=syslog.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+User=mysql
+Group=mysql
+ExecStart=/data/server/mysql/bin/mysqld --defaults-file=/etc/my.cnf
+LimitNOFILE = 5000
+#Restart=on-failure
+#RestartPreventExitStatus=1
+#PrivateTmp=false
+EOF
